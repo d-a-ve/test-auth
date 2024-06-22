@@ -6,14 +6,36 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+import { AuthChecker } from "./components/AuthChecker";
+import { InlinePaddingContainer, MaxContainer } from "./components/Container";
 import { Home } from "./pages/home";
+import { Login } from "./pages/login";
+import { Protected } from "./pages/protected";
+import { Signup } from "./pages/signup";
 
 // TODO: We would make use of code spliting so each page bundle will not be large but for this init, it is fine
 const routes = createBrowserRouter(
   createRoutesFromElements(
-    <Route element={<Outlet />}>
+    <>
       <Route path="/" element={<Home />} />
-    </Route>,
+      <Route
+        element={
+          <MaxContainer>
+            <InlinePaddingContainer>
+              <div className="flex min-h-svh w-full items-center justify-center">
+                <AuthChecker>
+                  <Outlet />
+                </AuthChecker>
+              </div>
+            </InlinePaddingContainer>
+          </MaxContainer>
+        }
+      >
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/protected" element={<Protected />} />
+      </Route>
+    </>,
   ),
 );
 

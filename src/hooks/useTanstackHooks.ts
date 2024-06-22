@@ -1,5 +1,4 @@
 import {
-  DefaultError,
   QueryClient,
   QueryKey,
   UndefinedInitialDataOptions,
@@ -7,16 +6,16 @@ import {
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
+import { ErrorResponse } from "../http";
 
 export function useCustomQuery<
   TQueryFnData = unknown,
-  TError = DefaultError,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
 >(
   queryOptions: UndefinedInitialDataOptions<
     TQueryFnData,
-    TError,
+    ErrorResponse,
     TData,
     TQueryKey
   >,
@@ -27,11 +26,15 @@ export function useCustomQuery<
 
 export function useCustomMutation<
   TData = unknown,
-  TError = DefaultError,
   TVariables = void,
   TContext = unknown,
 >(
-  mutationOptions: UseMutationOptions<TData, TError, TVariables, TContext>,
+  mutationOptions: UseMutationOptions<
+    TData,
+    ErrorResponse,
+    TVariables,
+    TContext
+  >,
   queryClient?: QueryClient,
 ) {
   return useMutation(mutationOptions, queryClient);
